@@ -1,0 +1,21 @@
+```python
+# Define the variable m
+m = 4  # You can change this value to test other inputs
+
+# Calculate x, y, z
+x = (m + 9) / 2
+y = (2 * m + 15) / 2
+z = (3 * m + 18) / 2
+
+# Calculate the average of x, y, z
+average_xyz = (x + y + z) / 3
+
+# Output the results
+output = f"x = {x}, y = {y}, z = {z}, average(x, y, z) = {average_xyz}"
+print(output)
+```
+Output:
+```
+x = 6.5, y = 11.5, z = 15.0, average(x, y, z) = 11.0
+```
+This code calculates the averages \( x \), \( y \), and \( z \) based on the given formulas, and provides the average of these three values in terms of \( m \). The output demonstrates the values for \( m = 4 \).

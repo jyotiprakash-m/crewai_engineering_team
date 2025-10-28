@@ -2,43 +2,35 @@ from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
 
 
-@CrewBase
-class Debate():
-    """Debate crew"""
 
+@CrewBase
+class Coder():
+    """Coder crew"""
 
     agents_config = 'config/agents.yaml'
     tasks_config = 'config/tasks.yaml'
 
-    # type: ignore
-    @agent
-    def debater(self) -> Agent:
-        return Agent(config=self.agents_config['debater'],verbose=True)  # type: ignore
-        
+    # One click install for Docker Desktop:
+    # https://docs.docker.com/desktop/
 
     @agent
-    def judge(self) -> Agent:
-        return Agent(config=self.agents_config['judge'], verbose=True)  # type: ignore
+    def coder(self) -> Agent:
+        return Agent(config=self.agents_config['coder'], verbose=True, allow_code_execution=True, code_execution_mode="safe", max_execution_time=100, max_retry_limit=3) # type: ignore
+
 
     @task
-    def propose(self) -> Task:
-        return Task(config=self.tasks_config['propose'], verbose=True)  # type: ignore
+    def coding_task(self) -> Task:
+        return Task( config=self.tasks_config['coding_task'] ) # type: ignore
 
-    @task
-    def oppose(self) -> Task:
-        return Task(config=self.tasks_config['oppose'], verbose=True)  # type: ignore
-
-    @task
-    def decide(self) -> Task:
-        return Task(config=self.tasks_config['decide'], verbose=True)  # type: ignore
 
     @crew
     def crew(self) -> Crew:
-        """Creates the Debate crew"""
+        """Creates the Coder crew"""
+
 
         return Crew(
-            agents=self.agents,  # Automatically created by the @agent decorator # type: ignore
-            tasks=self.tasks,  # Automatically created by the @task decorator # type: ignore
+            agents=self.agents,  # type: ignore
+            tasks=self.tasks,  # type: ignore
             process=Process.sequential,
             verbose=True,
         )
