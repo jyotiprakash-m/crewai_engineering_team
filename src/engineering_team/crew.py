@@ -1,44 +1,35 @@
+# src/financial_researcher/crew.py
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
-
+from crewai_tools import SerperDevTool
 
 @CrewBase
-class Debate():
-    """Debate crew"""
-
-
-    agents_config = 'config/agents.yaml'
-    tasks_config = 'config/tasks.yaml'
-
-    # type: ignore
-    @agent
-    def debater(self) -> Agent:
-        return Agent(config=self.agents_config['debater'],verbose=True)  # type: ignore
-        
+class ResearchCrew():
+    """Research crew for comprehensive topic analysis and reporting"""
 
     @agent
-    def judge(self) -> Agent:
-        return Agent(config=self.agents_config['judge'], verbose=True)  # type: ignore
+    def researcher(self) -> Agent:
+        return Agent(config=self.agents_config['researcher'],verbose=True,tools=[SerperDevTool()])  # type: ignore
+
+    @agent
+    def analyst(self) -> Agent:
+        return Agent(config=self.agents_config['analyst'],verbose=True,tools=[SerperDevTool()])  # type: ignore
+
 
     @task
-    def propose(self) -> Task:
-        return Task(config=self.tasks_config['propose'], verbose=True)  # type: ignore
+    def research_task(self) -> Task:
+        return Task(config=self.tasks_config['research_task'])  # type: ignore
 
     @task
-    def oppose(self) -> Task:
-        return Task(config=self.tasks_config['oppose'], verbose=True)  # type: ignore
-
-    @task
-    def decide(self) -> Task:
-        return Task(config=self.tasks_config['decide'], verbose=True)  # type: ignore
+    def analysis_task(self) -> Task:
+        return Task(config=self.tasks_config['analysis_task'], output_file='output/report.md')  # type: ignore
 
     @crew
     def crew(self) -> Crew:
-        """Creates the Debate crew"""
-
+        """Creates the research crew"""
         return Crew(
-            agents=self.agents,  # Automatically created by the @agent decorator # type: ignore
-            tasks=self.tasks,  # Automatically created by the @task decorator # type: ignore
+            agents=self.agents, # type: ignore
+            tasks=self.tasks,# type: ignore
             process=Process.sequential,
             verbose=True,
         )
