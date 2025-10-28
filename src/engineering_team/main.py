@@ -4,20 +4,21 @@ import warnings
 from datetime import datetime
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-from engineering_team.crew import Debate
+from engineering_team.crew import StockPicker
 import uvicorn
 
 warnings.filterwarnings("ignore", category=SyntaxWarning, module="pysbd")
 
 app = FastAPI()
 
-class DebateInput(BaseModel):
-    motion: str
+class StockPickerInput(BaseModel):
+    sector: str
+    current_date:str = datetime.now().strftime("%Y-%m-%d")
 
-@app.post("/run-debate/")
-async def run_debate(input: DebateInput):
+@app.post("/run-stock-picker/")
+async def run_stock_picker(input: StockPickerInput):
     try:
-        result = Debate().crew().kickoff(inputs={"motion": input.motion})
+        result = StockPicker().crew().kickoff(inputs={"sector": input.sector, "current_date": input.current_date})
         return {"result": result.raw}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
