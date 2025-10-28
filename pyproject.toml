@@ -8,6 +8,7 @@ dependencies = [
     "crewai[anthropic,tools]==1.2.1",
     "fastapi>=0.120.1",
     "gradio>=5.49.1",
+    "sqlmodel>=0.0.27",
 ]
 
 [project.scripts]

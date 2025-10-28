@@ -1,7 +1,0 @@
-The argument in favor of the motion that "Earth is round" is grounded in empirical evidence and scientific consensus, with several compelling points supporting this conclusion. First, numerous observations from space missions provide direct visual confirmation of Earth's round shape. Astronauts aboard the International Space Station, for example, regularly capture images of Earth as a blue sphere, with curvature visibly evident. Second, the phenomenon of ships disappearing hull-first over the horizon serves as a practical demonstration of Earth's curvature; as vessels sail away, they gradually become obscured, an effect that would not occur if Earth were flat. 
-
-Additionally, the concept of gravity further supports a round Earth, as gravitational forces pull matter toward the center, resulting in a spherical shape for planets. Scientific measurements confirm this, including the various gravitational pulls experienced at different latitudes, which align with the expectations for a rotating sphere rather than a flat surface. 
-
-Even ancient Greeks, such as Eratosthenes, calculated the Earth's circumference over two thousand years ago using simple geometry based on shadows cast by objects in different locations, showing early understanding of Earth's roundness. 
-
-To summarize, the evidence from space exploration, natural observations, the behavior of gravity, and historical scientific calculations all converge to support the undeniable reality that the Earth is, without a doubt, round.
