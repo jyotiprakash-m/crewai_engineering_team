@@ -2,43 +2,56 @@ from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
 
 
-@CrewBase
-class Debate():
-    """Debate crew"""
 
+@CrewBase
+class EngineeringTeam():
+    """EngineeringTeam crew"""
 
     agents_config = 'config/agents.yaml'
     tasks_config = 'config/tasks.yaml'
 
-    # type: ignore
     @agent
-    def debater(self) -> Agent:
-        return Agent(config=self.agents_config['debater'],verbose=True)  # type: ignore
+    def engineering_lead(self) -> Agent:
+        return Agent(config=self.agents_config['engineering_lead'], verbose=True)  # type: ignore
+ 
+    @agent
+    def backend_engineer(self) -> Agent:
+        return Agent(config=self.agents_config['backend_engineer'], verbose=True, allow_code_execution=True, code_execution_mode="safe", max_execution_time=500, max_retry_limit=3) # type: ignore
+    
+    
+    @agent
+    def frontend_engineer(self) -> Agent:
+        return Agent(config=self.agents_config['frontend_engineer'], verbose=True)  # type: ignore  
+
+    
+    @agent
+    def test_engineer(self) -> Agent:
+        return Agent(config=self.agents_config['test_engineer'], verbose=True, allow_code_execution=True, code_execution_mode="safe", max_execution_time=500, max_retry_limit=3)  # type: ignore
+  
+
+    @task
+    def design_task(self) -> Task:
+        return Task(config=self.tasks_config['design_task'])   # type: ignore
         
 
-    @agent
-    def judge(self) -> Agent:
-        return Agent(config=self.agents_config['judge'], verbose=True)  # type: ignore
+    @task
+    def code_task(self) -> Task:
+        return Task(config=self.tasks_config['code_task'])   # type: ignore
 
     @task
-    def propose(self) -> Task:
-        return Task(config=self.tasks_config['propose'], verbose=True)  # type: ignore
+    def frontend_task(self) -> Task:
+        return Task(config=self.tasks_config['frontend_task'])   # type: ignore
 
     @task
-    def oppose(self) -> Task:
-        return Task(config=self.tasks_config['oppose'], verbose=True)  # type: ignore
-
-    @task
-    def decide(self) -> Task:
-        return Task(config=self.tasks_config['decide'], verbose=True)  # type: ignore
+    def test_task(self) -> Task:
+        return Task(config=self.tasks_config['test_task'])   # type: ignore
 
     @crew
     def crew(self) -> Crew:
-        """Creates the Debate crew"""
-
+        """Creates the research crew"""
         return Crew(
-            agents=self.agents,  # Automatically created by the @agent decorator # type: ignore
-            tasks=self.tasks,  # Automatically created by the @task decorator # type: ignore
+            agents=self.agents, # type: ignore
+            tasks=self.tasks, # type: ignore
             process=Process.sequential,
             verbose=True,
         )
