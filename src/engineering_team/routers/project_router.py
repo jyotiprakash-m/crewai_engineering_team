@@ -1,7 +1,7 @@
 from datetime import datetime, timezone
 from typing import Optional, List
 from fastapi import APIRouter, Depends, HTTPException, Query
-from sqlmodel import SQLModel, Field, Session, select, func
+from sqlmodel import SQLModel, Field, Session, select, func, desc
 import shutil
 import os
 from pydantic import BaseModel
@@ -93,10 +93,12 @@ def create_project(session: Session, project_data: ProjectCreate) -> Project:
 def fetch_projects(session: Session, project_name: Optional[str] = None) -> List[Project]:
     """
     Fetch all projects, optionally filtered by project_name (case-insensitive, partial match).
+    Returns data in descending order of created_at.
     """
     query = select(Project)
     if project_name:
         query = query.where(func.lower(Project.project_name).like(f"%{project_name.lower()}%"))
+    query = query.order_by(desc(Project.created_at))
     return list(session.exec(query).all())
 
 def fetch_project_by_id(session: Session, project_id: int) -> Optional[Project]:
