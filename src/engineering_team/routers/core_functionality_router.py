@@ -54,12 +54,19 @@ def zip_project_folder(project_name: str) -> str:
     Returns the path to the created zip file.
     """
     folder_path = os.path.join("output", project_name)
-    zip_path = os.path.join(folder_path, project_name)
+    zip_path = os.path.join(folder_path, f"{project_name}.zip")
     # Remove old zip if it exists
-    if os.path.exists(zip_path + ".zip"):
-        os.remove(zip_path + ".zip")
-    # shutil.make_archive returns the path without .zip, so add it
-    shutil.make_archive(zip_path, 'zip', folder_path)
-    return zip_path + ".zip"
+    if os.path.exists(zip_path):
+        os.remove(zip_path)
+    with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as zipf:
+        for root, _, files in os.walk(folder_path):
+            for file in files:
+                file_path = os.path.join(root, file)
+                # Avoid including the zip file itself
+                if os.path.abspath(file_path) == os.path.abspath(zip_path):
+                    continue
+                arcname = os.path.relpath(file_path, folder_path)
+                zipf.write(file_path, arcname)
+    return zip_path
 
 
