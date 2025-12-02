@@ -35,7 +35,9 @@ app = FastAPI(title="Engineering Team API", description="API for managing engine
 # =========================================
 # You can update `origins` later to your frontend’s actual domain
 origins = [
-    "http://localhost:3000",
+    "http://98.94.14.94:3000",
+    "https://jyotidev.in",
+    "http://jyotidev.in"
 ]
 
 app.add_middleware(
@@ -45,6 +47,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# app.router.redirect_slashes = False
 
 # Mount static files for serving zipped projects
 app.mount("/public", StaticFiles(directory="output"), name="public")
@@ -105,4 +109,4 @@ app.include_router(project_router)
 
 # If you want to run this file directly
 if __name__ == "__main__":
-    uvicorn.run("engineering_team.main:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("engineering_team.main:app", host="0.0.0.0", port=8001, reload=True)
